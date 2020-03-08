@@ -5,14 +5,11 @@
 
 Edge::Edge(Node& rSrc, Node& rDst) : m_rSrc(rSrc), m_rDst(rDst)
 {
-    // fügt die Edge (this) in m_outgoingEdges des Source-Node ein.
-    // fügt die Edge (this) in m_incomingEdges des Destination-Node ein.
+	// fügt die Edge (this) in m_outgoingEdges des Source-Node ein.
+	rSrc.getOutEdges().push_back(this);
 
-    // Hinweis: die Funktionen Node::getOutEdges() und Node::getInEdges() verwenden!
-
-    // TEST:
-    // Erstellen Sie in main.cpp eine Edge und prüfen Sie, ob die Edge
-    // korrekt in m_outgoingEdges bzw. m_incomingEdges eingefügt wurde!
+	// fügt die Edge (this) in m_incomingEdges des Destination-Node ein.
+	rDst.getInEdges().push_back(this);
 }
 
 
@@ -20,7 +17,7 @@ Edge::Edge(Node& rSrc, Node& rDst) : m_rSrc(rSrc), m_rDst(rDst)
 
 Edge::Edge(const Edge& rOther) : m_rSrc(rOther.m_rSrc), m_rDst(rOther.m_rDst)
 {
-    // macht das Selbe wie 'Edge(Node& rSrc, Node& rDst)'
+	// macht das Selbe wie 'Edge(Node& rSrc, Node& rDst)'
 }
 
 
@@ -28,15 +25,10 @@ Edge::Edge(const Edge& rOther) : m_rSrc(rOther.m_rSrc), m_rDst(rOther.m_rDst)
 
 Edge::~Edge()
 {
-    // - entfernt die Edge (this) aus m_outgoingEdges im Source-Node
-    // - entfernt die Edge (this) aus m_incomingEdges im Destination-Node
-
-    // TEST:
-    // Erstellen Sie in main.cpp drei Edges, die jeweils den selben Source- und Destination-Node haben.
-    // Löschen Sie eine Edge wieder!
-    // Prüfen Sie, ob die gelöschte Edge aus m_outgoingEdges bzw. m_incomingEdges entfernt wurde!
-
-    // Hinweis: arbeiten Sie mit 'new' und 'delete'!
+	// - entfernt die Edge (this) aus m_outgoingEdges im Source-Node
+	this->m_rSrc.getOutEdges().remove(this);
+	// - entfernt die Edge (this) aus m_incomingEdges im Destination-Node
+	this->m_rDst.getInEdges().remove(this);
 }
 
 
@@ -44,9 +36,13 @@ Edge::~Edge()
 
 bool Edge::isConnectedTo(const Node& rNode) const
 {
-    // - gibt true zurück, wenn rNode entweder m_rSrc und m_rDst ist.
-    // Hinweis: Adressen vergleichen, um zu gucken, ob es wirklich das selbe Objekt ist!
-    return false;
+	// - gibt true zurück, wenn rNode entweder m_rSrc und m_rDst ist.
+	// Hinweis: Adressen vergleichen, um zu gucken, ob es wirklich das selbe Objekt ist!
+	if (&rNode == &(this->m_rDst) || &rNode == &(this->m_rSrc))
+	{
+		return true;
+	}
+	return false;
 }
 
 
@@ -54,9 +50,9 @@ bool Edge::isConnectedTo(const Node& rNode) const
 
 std::string Edge::toString() const
 {
-    std::string result;
-    result = m_rSrc.getID() + " -> " + m_rDst.getID();
-    return result;
+	std::string result;
+	result = m_rSrc.getID() + " -> " + m_rDst.getID();
+	return result;
 }
 
 

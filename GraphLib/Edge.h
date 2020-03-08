@@ -3,7 +3,6 @@
 
 #include "Node.h"
 
-
 class Edge
 {
 public:
@@ -28,7 +27,6 @@ private:
 
 	Node& m_rSrc;
 	Node& m_rDst;
-
 };
 
 #endif

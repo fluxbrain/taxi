@@ -1,9 +1,8 @@
-#include <string>
+#include "Node.h"
 #include <sstream>
 #include <iomanip>
 #include <cctype>
 
-#include "Node.h"
 using namespace std;
 
 // static initialization
@@ -16,3 +15,24 @@ Node::Node()
 	s << "Node_" << setw(4) << setfill('0') << s_numInstances;
 	m_id = s.str();
 }
+
+void Node::setDist(double dist)
+{
+	m_dist2Start = dist;
+}
+
+void Node::setPrev(Edge* prev)
+{
+	m_prev = prev;
+}
+
+double Node::getDist() const
+{
+	return m_dist2Start;
+}
+
+Edge* Node::getPrev() const
+{
+	return m_prev;
+}
+
